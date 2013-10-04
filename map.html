@@ -1,66 +1,26 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <meta charset = "utf-8">
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
-    <style type="text/css">
-      html { height: 100% }
-      body { height: 100%; margin: 0; padding: 0 }
-      #map-canvas { height: 100% }
-    </style>
+    <title>Test Web App</title>
+
+    <!-- INCLUDE REQUIRED THIRD PARTY LIBRARY JAVASCRIPT AND CSS -->
+    <script type="text/javascript" src="js/angular.min.js"></script>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/bootstrap-responsive.min.css">
+
+    <!-- INCLUDE APPLICATION SPECIFIC CSS AND JAVASCRIPT -->
     <script type="text/javascript"
-      src="http://maps.googleapis.com/maps/api/js?sensor=false&language=en">
+      src="http://maps.googleapis.com/maps/api/js?sensor=true&language=en">
     </script>
-    <script type="text/javascript">
-      var initialLocation;
-      var siberia = new google.maps.LatLng(60, 105);
-      var newyork = new google.maps.LatLng(40.69847032728747, -73.9514422416687);
-      var browserSupportFlag =  new Boolean();
-      function initialize() {
-        var mapOptions = {
-          zoom: 8,
-          mapTypeId: google.maps.MapTypeId.ROADMAP
-        };
-        var map = new google.maps.Map(document.getElementById("map-canvas"),
-            mapOptions);
-
-        // Try W3C Geolocation (Preferred)
-        if(navigator.geolocation) {
-          browserSupportFlag = true;
-          navigator.geolocation.getCurrentPosition(function(position) {
-          initialLocation = new google.maps.LatLng(position.coords.latitude,position.coords.longitude);
-          map.setCenter(initialLocation);
-
-          var infoWindow = new google.maps.InfoWindow({
-            map: map,
-            position: initialLocation,
-            content: 'Location found using HTML5.'
-          });
-        }, function() {
-          handleNoGeolocation(browserSupportFlag);
-        });
-      }
-
-      // Browser doesn't support Geolocation
-      else {
-        browserSupportFlag = false;
-        handleNoGeolocation(browserSupportFlag);
-      }
-
-      function handleNoGeolocation(errorFlag) {
-        if (errorFlag == true) {
-        alert("Geolocation service failed.");
-        initialLocation = newyork;
-        } else {
-          alert("Your browser doesn't support geolocation. We've placed you in Siberia.");
-          initialLocation = siberia;
-      }
-      map.setCenter(initialLocation);
-    }
-  }
-      google.maps.event.addDomListener(window, 'load', initialize);
-    </script>
+    <script type="text/javascript" src="js/web-app/app.js"></script>
+    <script type="text/javascript" src="js/web-app/controllers/mainController.js"></script>
+    <link rel="stylesheet" href="css/main.css">
   </head>
   <body>
-    <div id="map-canvas"/>
+    <div class="container main-frame" ng-app="WebApp" ng-controller ="mainController" ng-init="init()">
+      <div id="map-canvas"/>
+    </div>
   </body>
 </html>
